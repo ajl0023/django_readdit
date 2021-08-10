@@ -1,0 +1,23 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'posts/newpost.css' %}">
+<div class="new-post-container">
+  <a href="/"
+    ><img
+      class="new-post-profile-image"
+      src="{% static 'posts/reddit-default.f7d549ef.svg' %}"
+  
+      alt="" /></a
+  ><a class="new-post-input-container" href="/new-post"
+    ><input placeholder="Create Post" class="new-post-input" type="text" /></a
+  ><a href="/new-post?media=true"
+    ><img
+      class="post-option"
+      src="{% static 'posts/image-placeholder.1c6a32aa.svg' %}"
+      alt="" /></a
+  ><a href="/new-post?link=true"
+    ><img
+      class="post-option"
+      src="{% static 'posts/link-post.cdb86b79.svg' %}"
+      alt=""
+  /></a>
+</div>

@@ -1,0 +1,17 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'posts/postsContainer.css' %}">
+{% if modal %}
+{% include "posts/postModal.html"  %}
+{% endif  %}
+
+
+{% include "posts/postContainer.html" with object=post %}
+
+
+
+
+
+
+
+</html>

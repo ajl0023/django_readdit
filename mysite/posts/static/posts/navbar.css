@@ -1,0 +1,80 @@
+* {
+  list-style: none;
+}
+
+@font-face {
+  font-family: 'SFProText-Medium';
+  src: url("./font.ttf") format("truetype");
+}
+
+.navbar-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 12px;
+  background-color: white;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  top: 0;
+}
+
+.navbar-container .navbar-content {
+  position: relative;
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  gap: 12px;
+  max-width: 1000px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 4px 12px;
+  -ms-grid-columns: 0.5fr 2fr 0.2fr 0.5fr;
+      grid-template-columns: 0.5fr 2fr 0.2fr 0.5fr;
+}
+
+.navbar-container .navbar-content .logo {
+  left: 0;
+  top: 25%;
+  font-family: SFProText-Medium;
+  font-size: 24px;
+  letter-spacing: 0;
+  color: #f06c00;
+  text-decoration: none;
+}
+
+.navbar-container .navbar-content .search-bar-container {
+  margin: 0 auto;
+  position: relative;
+  height: 40px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.navbar-container .navbar-content .search-bar-container .search-bar {
+  overflow: hidden;
+  background: #f9f9f9;
+  border: none;
+  -webkit-box-shadow: inset 1px 1px 3px 0 rgba(0, 0, 0, 0.15);
+          box-shadow: inset 1px 1px 3px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  padding-left: 2.5rem;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+}
+
+.navbar-container .navbar-content .search-bar-container .search-icon {
+  position: absolute;
+  left: 15px;
+  max-width: 18px;
+  max-height: 18px;
+  -webkit-transform: translateY(55%);
+          transform: translateY(55%);
+}
+/*# sourceMappingURL=navbar.css.map */

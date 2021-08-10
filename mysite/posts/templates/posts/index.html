@@ -1,0 +1,20 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'posts/main.css' %}">
+
+<div id='main-app-wrapper' class="app-wrapper">
+  {% include "posts/navbar.html" %}
+  <div id='home-wrapper' class="home-wrapper">
+    {% include 'posts/home.html' %}
+  </div>
+  <script>
+    postsLoaded = `{{postsLoaded}}`
+    token = '{{csrf_token}}';
+  </script>
+  <script src="{% static 'posts/main.js' %}" defer>
+    // setup the video element and attach it to the Dash player
+  </script>
+</div>
+
+<!-- <script src="{% static 'posts/main.js' %}" defer> -->
+
+<!-- </script> -->

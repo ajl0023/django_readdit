@@ -1,0 +1,21 @@
+<div >
+    <div class="thread-line-container" style="left: 0px">
+        <li class="thread-line"></li>
+    </div>
+    <div class="comment-vote-title-container">
+        <div class="comment-vote-container">
+            <div class="comment-vote-button-container"> {% autoescape off %} <a class="{% if comment.voteState > 0 %}vote-state-active {% else %}
+                                comment-vote-button {% endif %}" name='upvote-button' data-id={{comment.id}}
+                    vote-type='comment'>{{uparrow}}</a> {% endautoescape %} <span> {{comment.voteTotal}}
+                </span> {% autoescape off %} <a name='downvote-button' data-id={{comment.id}} vote-type='comment'
+                    class={% if comment.voteState < 0 %} vote-state-active {% endif %}>{{downarrow}}</a>
+                {% endautoescape %} </div>
+        </div>
+        <div class="comment-container">
+            <p class="comment-author">{%if comment.author.username%} {{comment.author.username}} {%else%}
+                u/deleted {%endif%} </p>
+            <div class="parent-comment">{{comment.content}}</div>
+            <div class="reply-button-container"><button class="reply-button">Reply</button></div>
+        </div>
+    </div>
+</div>

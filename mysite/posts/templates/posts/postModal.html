@@ -1,0 +1,51 @@
+<div id='post-modal-container' class="modal-wrapper">
+    <input type="checkbox" id="trigger" class="burger-input" /><label for="trigger" class="close-label">
+        <div class="main-close-icon-container">
+            <span class="main-close-icon"></span>
+        </div>
+    </label>
+    <div class="card-modal">
+        <p class="card-modal-author"> ul/{% if post.author %}{{post.author.username}} {% else %}deleted {% endif %} </p>
+        <p class="modal-date">{{post.createdat}}</p>
+        <h4 class="card-modal-title">{{post.title}}</h4>
+        <div class="post-image-container"><img class="post-image" alt="" />
+        </div> {% if user.is_authenticated %}
+        <form id={{post.id}} method='post' action='/comments/' class="new-comment-container">
+            {{form}} <span class="submit-comment-container">
+
+                <input type='submit' id='comment-submit-button' class="submit-comment-button"></input>
+            </span></form>
+        {% else %} <div class="no-user-comment-container  ">
+            <p class="no-user-comment">Log in or sign up to leave a comment</p>
+            <div class="auth-button-container"><button class="">log in</button><button>sign up</button></div>
+        </div> {% endif %} <div class="card-modal-vote-container"> {% autoescape off %} <li data-id={{post.id}}
+                name='upvote-button' vote-type='post' class={% if post.voteState > 0 %} vote-state-active {% endif %}>
+                {{uparrow}}</li> {% endautoescape %} <li class="">{{post.voteTotal}}</li> {% autoescape off %} <li
+                data-id={{post.id}} name='downvote-button' class={% if post.voteState < 0 %} vote-state-active
+                {% endif %} vote-type='post'>{{downarrow}}</li> {% endautoescape %} </div>
+        <h4 class="comment-section-header">Comments</h4>
+        <div class="main-comment-container"> {% for comment in comments %} 
+        <div
+                style="position: relative; padding-left: {% widthratio comment.depth 1 23|add:15 %}px; padding-top: 10px;">
+                <div class="thread-line-container" style="left: 0px">
+                    <li class="thread-line"></li>
+                </div>
+                <div class="comment-vote-title-container">
+                    <div class="comment-vote-container">
+                        <div class="comment-vote-button-container"> {% autoescape off %} <a class="{% if comment.voteState > 0 %}vote-state-active {% else %}
+                                comment-vote-button {% endif %}" name='upvote-button' data-id={{comment.id}}
+                                vote-type='comment'>{{uparrow}}</a> {% endautoescape %} <span> {{comment.voteTotal}}
+                            </span> {% autoescape off %} <a name='downvote-button' data-id={{comment.id}}
+                                vote-type='comment' class={% if comment.voteState < 0 %} vote-state-active
+                                {% endif %}>{{downarrow}}</a> {% endautoescape %} </div>
+                    </div>
+                    <div class="comment-container">
+                        <p class="comment-author">{%if comment.author.username%} {{comment.author.username}} {%else%}
+                            u/deleted {%endif%} </p>
+                        <div class="parent-comment">{{comment.content}}</div>
+                        <div class="reply-button-container"><button class="reply-button">Reply</button></div>
+                    </div>
+                </div>
+            </div> {% endfor %} </div>
+    </div>
+</div>
