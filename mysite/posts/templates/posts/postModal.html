@@ -24,8 +24,7 @@
                 data-id={{post.id}} name='downvote-button' class={% if post.voteState < 0 %} vote-state-active
                 {% endif %} vote-type='post'>{{downarrow}}</li> {% endautoescape %} </div>
         <h4 class="comment-section-header">Comments</h4>
-        <div class="main-comment-container"> {% for comment in comments %} 
-        <div
+        <div class="main-comment-container"> {% for comment in comments %} <div
                 style="position: relative; padding-left: {% widthratio comment.depth 1 23|add:15 %}px; padding-top: 10px;">
                 <div class="thread-line-container" style="left: 0px">
                     <li class="thread-line"></li>

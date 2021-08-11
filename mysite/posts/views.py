@@ -28,6 +28,8 @@ from django.contrib.auth.hashers import check_password
 from django.utils.encoding import smart_text
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from html.parser import HTMLParser
+
 settings.DEBUG = True
 register = template.Library()
 uparrow = open(find('posts/up-arrow.svg')).read()

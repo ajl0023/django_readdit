@@ -14,7 +14,7 @@ def newComment(request):
         form.save(commit=False)
         form.user = request.user
         comment = form.save()
-        print(comment.id, '34234234234')
+       
         comment.voteState = 1
         comment.voteTotal = 1
         vote = Votes(authorid=request.user, commentid=comment, score=1)

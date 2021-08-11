@@ -1,41 +1,99 @@
-const voteContainer = document.getElementsByClassName("vote-container");
+import uparrowsvg from "../up-arrow.svg";
+import downarrowsvg from "../down-arrow.svg";
+
 const upvotes = document.getElementsByName("upvote-button");
 const downvotes = document.getElementsByName("downvote-button");
-const navLogin = document.getElementById("navbar-login-button");
-const navSignup = document.getElementById("navbar-signup-button");
-attachListeners(navLogin, "click", (e) => {
-  handleOpenAuthModal(e, "login");
+
+const test2 = document.getElementById("vue-vote-container");
+const User = {
+  template: "<div>User 234234234</div>",
+};
+const router = new VueRouter({
+  routes: [
+    // dynamic segments start with a colon
+    { path: "/", component: User },
+  ],
 });
-attachListeners(navSignup, "click", (e) => {
-  handleOpenAuthModal(e, "signup");
+
+Vue.component("vote-container", {
+  data: function () {
+    return {
+      currVoteState: this.voteState,
+      currVoteTotal: this.voteTotal,
+    };
+  },
+  props: ["voteTotal", "voteState", "type", "postId"],
+  methods: {
+    vote: vote,
+  },
+
+  template: /* HTML */ `<div
+    data-id="17f988b1e168448abb9193a3978a7f26"
+    class="vote-container"
+  >
+    <li
+      type="post"
+      v-bind:class="[currVoteState > 0 ? 'vote-state-active'  : '']"
+    >
+      ${uparrowsvg}
+    </li>
+    {{currVoteTotal}}
+    <li
+      v-bind:class="[currVoteState < 0   ? 'vote-state-active'  : '' ]"
+      href=""
+    >
+      ${downarrowsvg}
+    </li>
+  </div>`,
 });
+
+const app = new Vue({
+  router:router,
+  el: "#vue-vote-container",
+  delimiters: ["[[", "]]"],
+  data: {
+    myTitle: "Hello Vue!",
+  },
+  // methods: {
+  //   voteup: () => {
+  //     console.log(1);
+  //   },
+  // },
+}).$mount("#vue-vote-container");
+// attachListeners(navLogin, "click", (e) => {
+//   handleOpenAuthModal(e, "login");
+// });
+// attachListeners(navSignup, "click", (e) => {
+//   handleOpenAuthModal(e, "signup");
+// });
+
 upvotes.forEach((ele, i) => {
   let id = ele.getAttribute("data-id");
 
-  attachListeners(ele, "click", () => {
-    vote(
-      1,
-      id,
-      {
-        upvote: ele,
-        downvote: downvotes[i],
-      },
-      ele.getAttribute("vote-type"),
-      ele.nextElementSibling
-    );
-  });
-  attachListeners(downvotes[i], "click", () => {
-    vote(
-      -1,
-      id,
-      {
-        upvote: ele,
-        downvote: downvotes[i],
-      },
-      ele.getAttribute("vote-type"),
-      ele.nextElementSibling
-    );
-  });
+  // attachListeners(ele, "click", () => {
+  //   vote(
+  //     1,
+  //     id,
+  //     {
+  //       upvote: ele,
+  //       downvote: downvotes[i],
+  //     },
+  //     ele.getAttribute("vote-type"),
+  //     ele.nextElementSibling
+  //   );
+  // });
+  // attachListeners(downvotes[i], "click", () => {
+  //   vote(
+  //     -1,
+  //     id,
+  //     {
+  //       upvote: ele,
+  //       downvote: downvotes[i],
+  //     },
+  //     ele.getAttribute("vote-type"),
+  //     ele.nextElementSibling
+  //   );
+  // });
 });
 function updateOptions(options) {
   const update = { ...options };
@@ -49,7 +107,7 @@ function fetcher(url, options) {
   return fetch(url, updateOptions(options));
 }
 
-function vote(score, id, arrowSet, type, text) {
+function vote(score, id, type) {
   fetcher(`/posts/${score === 1 ? "voteup" : "votedown"}`, {
     method: "PUT",
     body: JSON.stringify({
@@ -61,21 +119,9 @@ function vote(score, id, arrowSet, type, text) {
       return data.json();
     })
     .then((data) => {
-      // let voteButton = ele;
-
-      if (score === 1) {
-        arrowSet.upvote.className =
-          data.voteState === 1 ? "vote-state-active" : "";
-        arrowSet.downvote.className = "";
-      }
-      if (score === -1) {
-        arrowSet.downvote.className =
-          data.voteState === -1 ? "vote-state-active" : "";
-        arrowSet.upvote.className = "";
-      }
-      console.log(arrowSet);
-
-      text.innerHTML = data.voteTotal;
+      console.log(data);
+      this.currVoteState = data.voteState;
+      this.currVoteTotal = data.voteTotal;
     });
 }
 
@@ -86,41 +132,7 @@ function fetchSinglePost(e, id) {
     .then((data) => {
       return data.text();
     })
-    .then((data) => {
-      const modalContainer = document.createElement("div");
-      modalContainer.innerHTML = data;
-      document.body.appendChild(modalContainer);
-      upvotes.forEach((ele, i) => {
-        let id = ele.getAttribute("data-id");
-
-        attachListeners(ele, "click", () => {
-          vote(
-            1,
-            id,
-            {
-              upvote: ele,
-              downvote: downvotes[i],
-            },
-            ele.getAttribute("vote-type"),
-            ele.nextElementSibling
-          );
-        });
-        attachListeners(downvotes[i], "click", () => {
-          vote(
-            -1,
-            id,
-            {
-              upvote: ele,
-              downvote: downvotes[i],
-            },
-            ele.getAttribute("vote-type"),
-            ele.nextElementSibling
-          );
-        });
-      });
-      const commentButton = document.getElementById("comment-submit-button");
-      attachListeners(commentButton, "click", postComment);
-    });
+    .then((data) => {});
 }
 function postComment(e) {
   e.preventDefault();
@@ -234,10 +246,10 @@ function handleOpenAuthModal(e, type) {
   const authbutton = document.getElementById("main-auth-button");
 
   const closeButton = document.getElementById("close-login-modal-button");
-  attachListeners(closeButton, "click", closeAuthModal);
-  attachListeners(authbutton, "click", (e) => {
-    handleAuth(e, type);
-  });
+  // attachListeners(closeButton, "click", closeAuthModal);
+  // attachListeners(authbutton, "click", (e) => {
+  //   handleAuth(e, type);
+  // });
 }
 function handleAuth(e, type) {
   const username = document.getElementById("username-input").value;
@@ -298,37 +310,6 @@ function closeAuthModal() {
   const loginModal = document.querySelector("div.login-modal-wrapper");
   loginModal.remove();
 }
-function attachListeners(ele, type, func) {
-  removeListeners();
-  if (ele && type && func) {
-    ele.addEventListener(type, func);
-  }
 
-  const navButton = document.getElementById("main-nav-button");
 
-  if (navButton) {
-    navButton.addEventListener("click", handleNavDropDown);
-  }
-  const titles = document.getElementsByName("post-title");
-  for (let i = 0; i < titles.length; i++) {
-    titles[i].addEventListener("click", postTitleRoute);
-  }
 
-  const modalWrapper = document.getElementById("post-modal-container");
-
-  if (modalWrapper) {
-    modalWrapper.addEventListener("click", handleReroute);
-  }
-}
-
-attachListeners();
-function removeListeners() {
-  const title = document.getElementsByName("post-title");
-  for (let i = 0; i < title.length; i++) {
-    title[i].removeEventListener("click", postTitleRoute);
-  }
-  for (let i = 0; i < upvotes.length; i++) {
-    upvotes[i].removeEventListener("click", vote);
-    downvotes[i].removeEventListener("click", vote);
-  }
-}

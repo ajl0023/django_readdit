@@ -18,7 +18,7 @@ def defineUid(**kwargs):
     
     if kwargs.get('sender') == Votes:
         instance = kwargs.get('instance')
-        print(instance.commentid.id,4554545)
+       
        
         if instance.uid is None or False or " ":
 
