@@ -1,99 +1,13 @@
-import uparrowsvg from "../up-arrow.svg";
-import downarrowsvg from "../down-arrow.svg";
-
+import "./components/components";
 const upvotes = document.getElementsByName("upvote-button");
 const downvotes = document.getElementsByName("downvote-button");
 
-const test2 = document.getElementById("vue-vote-container");
 const User = {
   template: "<div>User 234234234</div>",
 };
-const router = new VueRouter({
-  routes: [
-    // dynamic segments start with a colon
-    { path: "/", component: User },
-  ],
-});
-
-Vue.component("vote-container", {
-  data: function () {
-    return {
-      currVoteState: this.voteState,
-      currVoteTotal: this.voteTotal,
-    };
-  },
-  props: ["voteTotal", "voteState", "type", "postId"],
-  methods: {
-    vote: vote,
-  },
-
-  template: /* HTML */ `<div
-    data-id="17f988b1e168448abb9193a3978a7f26"
-    class="vote-container"
-  >
-    <li
-      type="post"
-      v-bind:class="[currVoteState > 0 ? 'vote-state-active'  : '']"
-    >
-      ${uparrowsvg}
-    </li>
-    {{currVoteTotal}}
-    <li
-      v-bind:class="[currVoteState < 0   ? 'vote-state-active'  : '' ]"
-      href=""
-    >
-      ${downarrowsvg}
-    </li>
-  </div>`,
-});
-
-const app = new Vue({
-  router:router,
-  el: "#vue-vote-container",
-  delimiters: ["[[", "]]"],
-  data: {
-    myTitle: "Hello Vue!",
-  },
-  // methods: {
-  //   voteup: () => {
-  //     console.log(1);
-  //   },
-  // },
-}).$mount("#vue-vote-container");
-// attachListeners(navLogin, "click", (e) => {
-//   handleOpenAuthModal(e, "login");
-// });
-// attachListeners(navSignup, "click", (e) => {
-//   handleOpenAuthModal(e, "signup");
-// });
 
 upvotes.forEach((ele, i) => {
   let id = ele.getAttribute("data-id");
-
-  // attachListeners(ele, "click", () => {
-  //   vote(
-  //     1,
-  //     id,
-  //     {
-  //       upvote: ele,
-  //       downvote: downvotes[i],
-  //     },
-  //     ele.getAttribute("vote-type"),
-  //     ele.nextElementSibling
-  //   );
-  // });
-  // attachListeners(downvotes[i], "click", () => {
-  //   vote(
-  //     -1,
-  //     id,
-  //     {
-  //       upvote: ele,
-  //       downvote: downvotes[i],
-  //     },
-  //     ele.getAttribute("vote-type"),
-  //     ele.nextElementSibling
-  //   );
-  // });
 });
 function updateOptions(options) {
   const update = { ...options };
@@ -106,8 +20,15 @@ function updateOptions(options) {
 function fetcher(url, options) {
   return fetch(url, updateOptions(options));
 }
+export function routeChange(id) {
+  this.$router.push(id);
+}
+export function vote(score, id, type) {
+  if (this.location === "home") {
+    console.log(50);
+    return;
+  }
 
-function vote(score, id, type) {
   fetcher(`/posts/${score === 1 ? "voteup" : "votedown"}`, {
     method: "PUT",
     body: JSON.stringify({
@@ -184,7 +105,6 @@ function handleReroute(e) {
   modalWrapper.parentElement.remove();
 }
 function postTitleRoute(e) {
-  console.log(345);
   const id = e.currentTarget.getAttribute("data-id");
   fetchSinglePost(e, id);
   window.history.pushState(null, "post", "/posts/" + id);
@@ -310,6 +230,3 @@ function closeAuthModal() {
   const loginModal = document.querySelector("div.login-modal-wrapper");
   loginModal.remove();
 }
-
-
-

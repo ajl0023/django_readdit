@@ -1,24 +1,31 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'posts/main.css' %}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/page.js/1.11.6/page.js"
-  integrity="sha512-MkYIEFfyoRmnQFt8ZoTflIGLT8RR+PfZSHtsG5Knc5uFayAspGft8XTaMIOozqD4KkGzE6xa7jU+tfWtcXMqtg=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <div id='main-app-wrapper' class="app-wrapper">
   {% include "posts/navbar.html" %}
-  <div id='home-wrapper' class="home-wrapper">
-    {% include 'posts/home.html' %}
+  <div id='post-wrapper'>
+
+    <router-view v-on:click.native="handleRouteHome" class="view one">
+
+    </router-view>
+
+  </div>
+  <div id='app'>
+
+    <div id='home-wrapper' class="home-wrapper">
+      {% include 'posts/home.html' %}
+    </div>
   </div>
   <script>
     postsLoaded = `{{postsLoaded}}`
     token = '{{csrf_token}}';
   </script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src=https://unpkg.com/vue-router/dist/vue-router.js> </script>
-
-   <script defer type="text/javascript"  src="{% static 'posts/js/dist/index_bundle.js' %}">
+  <script src=https://unpkg.com/vue-router/dist/vue-router.js> </script> <script defer type="text/javascript"
+    src="{% static 'posts/js/dist/index_bundle.js' %}">
   </script>
- 
+
 
 
 

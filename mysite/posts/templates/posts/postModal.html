@@ -1,4 +1,4 @@
-<div id='post-modal-container' class="modal-wrapper">
+<div id="modal-wrapper"  class="modal-wrapper">
     <input type="checkbox" id="trigger" class="burger-input" /><label for="trigger" class="close-label">
         <div class="main-close-icon-container">
             <span class="main-close-icon"></span>
@@ -18,11 +18,7 @@
         {% else %} <div class="no-user-comment-container  ">
             <p class="no-user-comment">Log in or sign up to leave a comment</p>
             <div class="auth-button-container"><button class="">log in</button><button>sign up</button></div>
-        </div> {% endif %} <div class="card-modal-vote-container"> {% autoescape off %} <li data-id={{post.id}}
-                name='upvote-button' vote-type='post' class={% if post.voteState > 0 %} vote-state-active {% endif %}>
-                {{uparrow}}</li> {% endautoescape %} <li class="">{{post.voteTotal}}</li> {% autoescape off %} <li
-                data-id={{post.id}} name='downvote-button' class={% if post.voteState < 0 %} vote-state-active
-                {% endif %} vote-type='post'>{{downarrow}}</li> {% endautoescape %} </div>
+        </div> {% endif %} <div class="card-modal-vote-container"><vote-container></vote-container>  </div>
         <h4 class="comment-section-header">Comments</h4>
         <div class="main-comment-container"> {% for comment in comments %} <div
                 style="position: relative; padding-left: {% widthratio comment.depth 1 23|add:15 %}px; padding-top: 10px;">

@@ -142,7 +142,8 @@ def post(request, post_id):
         'uparrow': uparrow,
         "form": commentForm,
         'downarrow': downarrow,
-        'postsLoaded': False
+        'postsLoaded': False,
+        'postLoaded': True
     })
 
 
