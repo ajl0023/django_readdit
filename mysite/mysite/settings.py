@@ -13,16 +13,17 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+print(BASE_DIR, 890172389017)
 PASSWORD_HASHERS = [
-                    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
 
 
-                    # 'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-                    # 'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-                    # 'django.contrib.auth.hashers.Argon2PasswordHasher',
-                    ]
+    # 'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    # 'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    # 'django.contrib.auth.hashers.Argon2PasswordHasher',
+]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -39,13 +40,16 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "postcss_modules",
-    "posts.apps.PostsConfig",
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "posts.apps.PostsConfig",
+    "comments.apps.CommentsConfig",
+
 ]
 
 MIDDLEWARE = [
@@ -65,7 +69,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,7 +81,7 @@ TEMPLATES = [
         },
     },
 ]
-
+print(TEMPLATES[0])
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
@@ -135,15 +139,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'var/static_root/'
+STATICFILES_DIRS = ['static']
 # STATIC_ROOT = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-APP_DIR = os.path.join(BASE_DIR, 'posts')
+# APP_DIR = os.path.join(BASE_DIR, 'posts')
 
-STATICFILES_DIRS = [
-    os.path.join(APP_DIR, "static"),
+# STATICFILES_DIRS = [
+#     os.path.join(APP_DIR, "static"),
 
-]
+# ]
 AUTH_USER_MODEL = 'posts.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

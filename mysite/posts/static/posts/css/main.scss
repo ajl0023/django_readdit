@@ -16,7 +16,7 @@
 
 @font-face {
     font-family: SFProText-Medium;
-    src: url("./sfpro.ttf");
+    src: url("../fonts/font.ttf");
 }
 
 html {
@@ -276,10 +276,7 @@ html {
 
 .posts-container {
     width: 100%;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+   
 }
 
 .new-post-container {
@@ -438,11 +435,17 @@ html {
     color: #bcbcbc;
     
     * {
-        
+        width: 8px;
+        object-fit: cover;
+        object-position: center center;
         font-size: 12px;
-        max-width: 8px;
+   
         color: #bcbcbc;
     }
+}
+.vote-vertical {
+    gap: 0px;
+    flex-direction: column;
 }
 .new-comment-container {
     position: relative;
@@ -586,7 +589,13 @@ html {
         }
     }
 }
-
+.post-wrapper{
+    width: 100%;
+     flex-direction: column;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+}
 .post-image-container {
     overflow: hidden;
     max-width: 320px;

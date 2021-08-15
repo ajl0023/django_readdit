@@ -1,25 +1,25 @@
-{% load static %} <div id='vue-vote-container' class='posts-container'> {% if posts %} {% for post in posts %} <div
-        data-id={{post.id}} class="card-container">
-        <div class="card-content-container ">
-            <p class="card-author">ul/{% if post.author %}{{post.author.username}} {% else %}deleted {% endif %}</p>
-            <h4 class="card-title">
+{% load static %} 
+<div class='post-wrapper' >
+    {% if posts %} {% for post in posts %}
+ <div data-id={{post.id}} class="card-container">
+    <div class="card-content-container ">
+        <p class="card-author">ul/{% if post.author %}{{post.author.username}} {% else %}deleted {% endif %}</p>
+        <h4 class="card-title">
 
-                <li name='post-title' v-on:click="routeChange('{{post.id}}')" data-id="{{post.id}}">{{post.title}}</li>
-              
+            <li v-on:click="routeChange('{{post.id}}')">{{post.title}}</li>
+        </h4>
+        <div class="vote-container">
 
-
-            </h4>
-            <div class="vote-container">
-
-                <vote-container location='home' vote-total={{post.voteTotal}} type='post' post-id={{post.id}}
-                    vote-state={{post.voteState}}></vote-container>
-            </div>
+            <vote-container location='modal' vote-total={{post.voteTotal}} type='post' post-id={{post.id}}
+                vote-state={{post.voteState}}></vote-container>
         </div>
-        <div class="edit-del-container">
-            <div class="edit-del-content"><button class="delete-button"><svg class="MuiSvgIcon-root del-svg"
-                        focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z">
-                        </path>
-                    </svg></button></div>
-        </div>
-    </div> {% endfor %} {% endif %} </div>
+    </div>
+    <div class="edit-del-container">
+        <div class="edit-del-content"><button class="delete-button"><svg class="MuiSvgIcon-root del-svg"
+                    focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z">
+                    </path>
+                </svg></button></div>
+    </div>
+</div> {% endfor %} {% endif %}
+</div>

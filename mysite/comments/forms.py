@@ -13,7 +13,8 @@ class CommentForm(ModelForm):
 
         fields = ['content', 'postid']
         widgets = {
-            'postid': widgets.HiddenInput()
+            'postid': widgets.HiddenInput(),
+            'content': widgets.Textarea(attrs={'v-model': "text"})
         }
         labels = {
             'content': "",

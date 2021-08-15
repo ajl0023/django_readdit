@@ -1,14 +1,14 @@
 {% load static %}
 
 
-<link rel="stylesheet"  href="{% static 'posts/navbar.css' %}" />
-<div class="navbar-wrapper">
+<link rel="stylesheet" href="{% static 'posts/css/navbar.css' %}" />
+<div id='nav-vue-instance' class="navbar-wrapper">
   <div class="navbar-container">
     <div class="navbar-content">
       <li><a class="logo" href="/posts">readit</a></li>
       <div class="search-bar-container">
         <input class="search-bar" placeholder="Search" type="text" /><span class="search-icon"><img
-            src="{% static 'posts/magnifying-glass.svg' %}" alt="" /></span>
+            src="{% static 'posts/images/magnifying-glass.svg' %}" alt="" /></span>
         <div class="inactive"></div>
       </div>
       <svg class="MuiSvgIcon-root brightness-icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
@@ -16,21 +16,17 @@
           d="M10 4c4.41 0 8 3.59 8 8s-3.59 8-8 8c-.34 0-.68-.02-1.01-.07C10.9 17.77 12 14.95 12 12s-1.1-5.77-3.01-7.93C9.32 4.02 9.66 4 10 4m0-2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 8.3 10 12s-2.01 6.92-5 8.65C6.47 21.5 8.18 22 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z">
         </path>
       </svg> {% if user.is_authenticated %} <div class="profile-wrapper">
-        <button id='main-nav-button' class="navbar-profile-container">
+        <button v-on:click="handleNavDropdown" class="navbar-profile-container">
           <div class="navbar-logo-text">
-            <img class="default-profile-image" src="{% static 'posts/reddit-default.f7d549ef.svg' %}" alt=""
+            <img class="default-profile-image" src="{% static 'posts/images/reddit-default.f7d549ef.svg' %}" alt=""
               style="background-color: rgba(0, 0, 0, 0.1)" />
             <p class="navbar-profile-username">{{user.username}}</p>
           </div>
-          <img class="navbar-profile-triangle" src="{% static 'posts/Triangle.svg' %}" alt="" />
+          <img class="navbar-profile-triangle" src="{% static 'posts/images/Triangle.svg' %}" alt="" />
         </button>
-        <div class="navbar-dropdown-container" style='display:none'>
-          <ul class="navbar-dropdown">
-            <li><button class="navbar-dropdown-options ">Logout</button></li>
-          </ul>
-        </div>
+        <drop-down v-bind:drop-down=dropDown></drop-down>
       </div> {%else%} <div class="auth-button-container-navbar">
-        <button id='navbar-login-button' class="">log in</button><button id='navbar-signup-button'>sign up</button>
+        <button v-on:click='toggleAuthModal("login")' id='navbar-login-button' class="">log in</button><button id='navbar-signup-button' v-on:click='toggleAuthModal("signup")' >sign up</button>
       </div> {% endif %}
     </div>
   </div>

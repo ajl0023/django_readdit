@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'SFProText-Medium';
-  src: url("./font.ttf") format("truetype");
+  src: url("../fonts/font.ttf") format("truetype");
 }
 
 .navbar-container {

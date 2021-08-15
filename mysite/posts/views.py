@@ -22,7 +22,7 @@ import json
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from django.conf import settings
-from django.contrib.auth import authenticate, get_user_model, login
+from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 from django.utils.encoding import smart_text
@@ -32,8 +32,6 @@ from html.parser import HTMLParser
 
 settings.DEBUG = True
 register = template.Library()
-uparrow = open(find('posts/up-arrow.svg')).read()
-downarrow = open(find('posts/down-arrow.svg')).read()
 
 
 @register.simple_tag
@@ -53,9 +51,9 @@ def index(request):
     # print(posts[0].author)
 
     context = {
-        'uparrow': uparrow,
+
         'posts': posts.all(),
-        'downarrow': downarrow,
+
         'postsLoaded': True
     }
 
@@ -63,7 +61,7 @@ def index(request):
 
 
 def fetchPosts(request):
-    print(234234)
+
     voteTotal = Votes.objects.filter(postid=OuterRef('pk')).values('score').annotate(voteTotal=Sum('score')).values(
         'voteTotal'
     )
@@ -75,13 +73,17 @@ def fetchPosts(request):
         voteState, 0), className=Case(When(voteState__gt=0, then=Value('vote-state-active')), default=Value("")))
 
     context = {
-        'uparrow': uparrow,
+
         'posts': posts.all(),
-        'downarrow': downarrow,
+
         'postsLoaded': True
     }
 
     return render(request, 'posts/postContainer.html', context)
+
+
+def logout_view(request):
+    return logout(request)
 
 
 def fetchPost(request, post_id):
@@ -102,16 +104,15 @@ def fetchPost(request, post_id):
                                                     ), 0), voteState=Coalesce(Votes.objects.filter(commentid=OuterRef(
                                                         'pk'), authorid=request.user.id).values('score'), 0))
 
-    print(uparrow)
     commentForm = CommentForm()
     print(commentForm)
     return render(request, 'posts/postModal.html', {
         "post": post,
         "comments": comments,
         "modal": True,
-        'uparrow': uparrow,
+
         'form': commentForm,
-        'downarrow': downarrow,
+
         'postsLoaded': False
     })
 
@@ -133,15 +134,14 @@ def post(request, post_id):
                                                     ), 0), voteState=Coalesce(Votes.objects.filter(commentid=OuterRef(
                                                         'pk'), authorid=request.user.id).values('score'), 0))
 
-    print(uparrow)
     commentForm = CommentForm()
     return render(request, 'posts/index.html', {
         "post": post,
         "comments": comments,
         "modal": True,
-        'uparrow': uparrow,
+
         "form": commentForm,
-        'downarrow': downarrow,
+
         'postsLoaded': False,
         'postLoaded': True
     })

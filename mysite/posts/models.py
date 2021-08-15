@@ -15,11 +15,10 @@ def assignId():
 
 @receiver(pre_save)
 def defineUid(**kwargs):
-    
+
     if kwargs.get('sender') == Votes:
         instance = kwargs.get('instance')
-       
-       
+
         if instance.uid is None or False or " ":
 
             if instance.commentid:

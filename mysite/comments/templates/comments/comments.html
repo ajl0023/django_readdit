@@ -1,0 +1,12 @@
+<div class="main-comment-container">
+    {% for comment in comments %}
+    <div style="position: relative; padding-left: {% widthratio comment.depth 1 23|add:15 %}px; padding-top: 10px;">
+        <reply-wrapper commentid='{{comment.id}}' v-on:replyClicked='handleReply' v-on:commentClicked='handleComment'
+            inline-template class="new-comment-container">
+            {% include "comments/comment.html" with object=comment %}
+        </reply-wrapper>
+    </div>
+
+
+    {% endfor %}
+</div>

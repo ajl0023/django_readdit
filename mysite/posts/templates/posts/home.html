@@ -1,12 +1,33 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'posts/postsContainer.css' %}">
+<link rel="stylesheet" href="{% static 'posts/css/postsContainer.css' %}">
+
+
+
+
+
 {% if modal %}
 <!-- {% include "posts/postModal.html"  %} -->
-{% endif  %}
+{% endif %}
+
+<div id='home-posts-container' class='posts-container' >
+
+  <auth-modal v-bind:auth-type='authType' v-if='showAuthModal' @close-auth='closeModal'></auth-modal>
+  <router-view name='postModal'></router-view>
+  <post-wrapper>
+
+  </post-wrapper>
 
 
-{% include "posts/postContainer.html" with object=post %}
+
+
+  {% if postsLoaded is True %}
+  {% include "posts/postContainer.html" with object=post %}
+  {% else %}
+  {% endif %}
+
+
+</div>
 
 
 

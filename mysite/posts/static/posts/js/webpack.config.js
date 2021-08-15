@@ -1,4 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { VueLoaderPlugin } = require("vue-loader");
+
 const path = require("path");
 module.exports = {
   output: {
@@ -9,18 +11,26 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.vue$/,
+        loader: "vue-loader",
+      },
+      {
         test: /\.(png|jpg|jpeg|gif|pdf)$/i,
         type: "asset/resource",
       },
+      // {
+      //   test: /\.svg/,
+      //   type: "asset/inline",
+      //   generator: {
+      //     dataUrl: (content) => {
+      //       content = content.toString();
+      //       return content;
+      //     },
+      //   },
+      // },
       {
-        test: /\.svg/,
-        type: "asset/inline",
-        generator: {
-          dataUrl: (content) => {
-            content = content.toString();
-            return content;
-          },
-        },
+        test: /\.svg$/,
+        use: ["vue-svg-loader"],
       },
     ],
   },
@@ -31,5 +41,5 @@ module.exports = {
     inline: true,
   },
   entry: path.resolve(__dirname, "main.js"),
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [new HtmlWebpackPlugin(), new VueLoaderPlugin()],
 };
